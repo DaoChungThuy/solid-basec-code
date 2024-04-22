@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
+    /**
+     * Handle a registration request.
+     *
+     * @param  RegisterRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(RegisterRequest $request)
     {
         $validatedData = $request->validated();

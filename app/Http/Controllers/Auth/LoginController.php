@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    /**
+     * Handle a login request.
+     *
+     * @param  LoginRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(LoginRequest $request)
     {
         $validatedData = $request->validated();
@@ -18,6 +24,6 @@ class LoginController extends Controller
             return response()->json(['success' => true, 'message' => __('auth.login_success')], Response::HTTP_OK);
         }
 
-        return response()->json(['error' => __('auth.password')], Response::HTTP_UNAUTHORIZED);
+        return response()->json(['error' => __('auth.failed')], Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,8 +15,9 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:6|max:255|confirmed',
         ];
     }
     protected function failedValidation(Validator $validator)

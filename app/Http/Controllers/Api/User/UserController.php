@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Controllers\Api\User;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Services\User\CreateUserService;
+use App\Services\User\GetUserService;
+use App\Services\User\UpdateUserService;
+use App\Services\User\DeleteUserService;
+use App\Http\Requests\CreateUpdate\CreateUpdateRequest;
+
+class UserController extends Controller
+{
+    public function store(CreateUpdateRequest $request)
+    {
+        $user = resolve(CreateUserService::class)->setParams($request->validated())->handle();
+
+        if (!$user) {
+            return $this->responseErrors(__('message.errors'));
+        }
+
+        return $this->responseSuccess([
+            'data' => $user,
+            'message' => __('message.success'),
+        ]);
+    }
+
+    public function index()
+    {
+        $user = resolve(GetUserService::class)->handle();
+
+        if (!$user) {
+            return $this->responseErrors(__('message.errors'));
+        }
+
+        return $this->responseSuccess([
+            'data' => $user,
+            'message' => __('message.success'),
+        ]);
+    }
+
+    public function update(CreateUpdateRequest $request, $id)
+    {
+        $data = array_merge($request->validated(), ['id' => $id]);
+
+        $user = resolve(UpdateUserService::class)->setParams($data)->handle();
+
+        if (!$user) {
+            return $this->responseErrors(__('message.errors'));
+        }
+
+        return $this->responseSuccess([
+            'data' => $data,
+            'message' => __('message.success'),
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $user = resolve(DeleteUserService::class)->setParams($id)->handle();
+
+        if (!$user) {
+            return $this->responseErrors(__('message.errors'));
+        }
+
+        return $this->responseSuccess([
+            'data' => $user,
+            'message' => __('message.success'),
+        ]);
+    }
+}

@@ -19,7 +19,9 @@ class CreateUserService extends BaseService
     public function handle()
     {
         try {
-            return $this->userRepository->create($this->data);
+            $user = $this->userRepository->create($this->data);
+
+            return $user;
         } catch (Exception $e) {
             Log::info($e);
 

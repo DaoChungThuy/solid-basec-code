@@ -8,11 +8,12 @@ use App\Services\User\CreateUserService;
 use App\Services\User\GetUserService;
 use App\Services\User\UpdateUserService;
 use App\Services\User\DeleteUserService;
-use App\Http\Requests\CreateUpdate\CreateUpdateRequest;
+use App\Http\Requests\CreateUpdate\CreateRequest;
+use App\Http\Requests\CreateUpdate\UpdateRequest;
 
 class UserController extends Controller
 {
-    public function store(CreateUpdateRequest $request)
+    public function store(CreateRequest $request)
     {
         $user = resolve(CreateUserService::class)->setParams($request->validated())->handle();
 
@@ -40,7 +41,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(CreateUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $data = array_merge($request->validated(), ['id' => $id]);
 

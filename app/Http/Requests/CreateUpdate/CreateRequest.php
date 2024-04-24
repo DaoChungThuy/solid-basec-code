@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\CreateUpdate;
 
 use App\Http\Requests\BaseRequest;
 
-class RegisterRequest extends BaseRequest
+class CreateRequest extends BaseRequest
 {
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string|min:8|max:20|confirmed',
+            'email' => 'required|email|unique:users,email,',
+            'password' => 'required|string|min:8|max:20',
         ];
     }
 }

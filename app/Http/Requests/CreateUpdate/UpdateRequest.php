@@ -17,7 +17,7 @@ class UpdateRequest extends BaseRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $this->id,
-            'password' => 'required|string|min:8|max:20',
+            'password' => 'required|string|min:8|max:20|regex:/^\S*$/',
         ];
     }
 }

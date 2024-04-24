@@ -20,7 +20,9 @@ use App\Http\Controllers\Api\User\UserController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-Route::post('create', [UserController::class, 'store']);
-Route::get('index', [UserController::class, 'index']);
-Route::put('update/{id}', [UserController::class, 'update']);
-Route::delete('delete/{id}', [UserController::class, 'destroy']);
+Route::prefix('users')->group(function () {
+    Route::post('create', [UserController::class, 'store']);
+    Route::get('index', [UserController::class, 'index']);
+    Route::put('update/{id}', [UserController::class, 'update']);
+    Route::delete('delete/{id}', [UserController::class, 'destroy']);
+});

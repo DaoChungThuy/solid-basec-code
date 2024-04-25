@@ -10,4 +10,6 @@ interface UserRepositoryInterface extends CrudRepositoryInterface
 
     public function findBydata($colum, $data, $operator = '=');
 
+    public function getRole($id);
+
 }

@@ -22,4 +22,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->where($colum, $operator, $data)->get();
     }
+
+    public function getRole($id)
+    {
+        return $this->model->findOrFail($id)->roles()->get();
+    }
 }

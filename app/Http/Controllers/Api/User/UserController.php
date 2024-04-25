@@ -10,6 +10,7 @@ use App\Services\User\UpdateUserService;
 use App\Services\User\DeleteUserService;
 use App\Http\Requests\CreateUpdate\CreateRequest;
 use App\Http\Requests\CreateUpdate\UpdateRequest;
+use App\Services\User\FindUserService;
 
 class UserController extends Controller
 {
@@ -62,6 +63,20 @@ class UserController extends Controller
         $user = resolve(DeleteUserService::class)->setParams($id)->handle();
 
         if (!$user) {
+            return $this->responseErrors(__('message.errors'));
+        }
+
+        return $this->responseSuccess([
+            'data' => $user,
+            'message' => __('message.success'),
+        ]);
+    }
+
+    public function show($id)
+    {
+        $user = resolve(FindUserService::class)->setParams($id)->handle();
+
+        if (empty($user)) {
             return $this->responseErrors(__('message.errors'));
         }
 

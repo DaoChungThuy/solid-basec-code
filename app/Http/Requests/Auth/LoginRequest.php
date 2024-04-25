@@ -16,7 +16,7 @@ class LoginRequest extends BaseRequest
     {
         return [
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|max:20',
+            'password' => 'required|min:8|max:20|regex:/^\S*$/',
         ];
     }
 }

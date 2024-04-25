@@ -23,6 +23,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::prefix('users')->group(function () {
     Route::post('create', [UserController::class, 'store']);
     Route::get('index', [UserController::class, 'index']);
+    Route::get('show/{id}', [UserController::class, 'show']);
     Route::put('update/{id}', [UserController::class, 'update']);
     Route::delete('delete/{id}', [UserController::class, 'destroy']);
 });

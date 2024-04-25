@@ -39,6 +39,9 @@ abstract class BaseRepository implements CrudRepositoryInterface
 
     public function delete($id)
     {
-        return $this->model->findOrFail($id)->delete();
+        $model = $this->model->find($id);
+        $model->delete();
+
+        return $model;
     }
 }

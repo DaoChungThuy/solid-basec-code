@@ -7,7 +7,7 @@ use App\Services\BaseService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class UpdateUserService extends BaseService
+class FindUserService extends BaseService
 {
     protected $userRepository;
 
@@ -19,9 +19,9 @@ class UpdateUserService extends BaseService
     public function handle()
     {
         try {
-            $this->userRepository->update($this->data, $this->data['id']);
+            $user = $this->userRepository->findBydata('id', $this->data);
 
-            return true;
+            return $user;
         } catch (Exception $e) {
             Log::info($e);
 

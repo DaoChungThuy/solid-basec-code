@@ -4,6 +4,7 @@ use App\Http\Controllers\Payment\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,10 @@ use App\Http\Controllers\Api\Auth\AuthController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-
+Route::prefix('users')->group(function () {
+    Route::post('create', [UserController::class, 'store']);
+    Route::get('index', [UserController::class, 'index']);
+    Route::get('show/{id}', [UserController::class, 'show']);
+    Route::put('update/{id}', [UserController::class, 'update']);
+    Route::delete('delete/{id}', [UserController::class, 'destroy']);
+});

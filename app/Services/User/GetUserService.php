@@ -19,8 +19,9 @@ class GetUserService extends BaseService
     public function handle()
     {
         try {
-            $this->userRepository->all();
-            return true;
+            $user = $this->userRepository->all();
+
+            return $user;
         } catch (Exception $e) {
             Log::info($e);
 

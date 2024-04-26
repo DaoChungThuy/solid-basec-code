@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Services\User\GetRoleService;
 use App\Enums\UserRole;
+use App\Models\User;
 
 class Role
 {
@@ -18,20 +18,21 @@ class Role
      */
     public function handle(Request $request, Closure $next)
     {
+        $user = auth()->user();
 
-        if (!auth()->check()) {
+        if (empty($user)) {
             return redirect()->route('show_login');
         }
 
         $requestedUserId = $request->route('id');
         $currentUserId = $request->user()->id;
 
-        if ($requestedUserId == $currentUserId) {
+        if ($requestedUserId == $currentUserId || empty($requestedUserId)) {
             return $next($request);
         }
 
-        $requestedUserRoles = resolve(GetRoleService::class)->setParams($requestedUserId)->handle();
-        $currentUserRoles = resolve(GetRoleService::class)->setParams($currentUserId)->handle();
+        $requestedUserRoles = User::find($requestedUserId)->roles()->get();
+        $currentUserRoles = $user->roles()->get();
 
         foreach ($requestedUserRoles as $requestedUserRole) {
             foreach ($currentUserRoles as $currentUserRole) {
@@ -40,7 +41,6 @@ class Role
                     $currentUserRole['id'] == UserRole::Staff ||
                     ($currentUserRole['id'] == UserRole::Store && $requestedUserRole['id'] != UserRole::Staff)
                 ) {
-
                     return redirect()->route('show_login');
                 }
             }

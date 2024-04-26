@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
+        DB::table('roles')->insert([
             [
                 'name' => 'Admin',
                 'description' => 'Has permission to edit information of all stores and staff.',
@@ -26,11 +26,7 @@ class RoleSeeder extends Seeder
             [
                 'name' => 'Staff',
                 'description' => 'Has permission to edit own staff information only.',
-            ],
-        ];
-
-        foreach ($roles as $roleData) {
-            Role::create($roleData);
-        }
+            ]
+        ]);
     }
 }

@@ -98,11 +98,8 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::created(function ($user) {
-
             $defaultRoleId = UserRole::Staff;
-
             $user->roles()->attach($defaultRoleId);
         });
     }
-
 }

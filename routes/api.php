@@ -17,13 +17,14 @@ use App\Http\Controllers\Api\User\UserController;
 |
  */
 
-Route::post('login', [AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
+Route::get('show_login', [AuthController::class, 'showLogin'])->name('show_login');
 
 Route::prefix('users')->group(function () {
     Route::post('create', [UserController::class, 'store']);
     Route::get('index', [UserController::class, 'index']);
     Route::get('show/{id}', [UserController::class, 'show']);
-    Route::put('update/{id}', [UserController::class, 'update']);
-    Route::delete('delete/{id}', [UserController::class, 'destroy']);
+    Route::put('update/{id}', [UserController::class, 'update'])->middleware('role');
+    Route::delete('delete/{id}', [UserController::class, 'destroy'])->middleware('role');
 });

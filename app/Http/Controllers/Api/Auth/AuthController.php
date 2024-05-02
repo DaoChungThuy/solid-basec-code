@@ -54,4 +54,9 @@ class AuthController extends Controller
             'message' => __('auth.login_success'),
         ]);
     }
+
+    public function showLogin()
+    {
+        return $this->responseErrors(__('message.role'), Response::HTTP_UNAUTHORIZED);
+    }
 }

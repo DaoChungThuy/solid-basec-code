@@ -89,6 +89,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Define the relationship between users and to-dos.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function toDos()
+    {
+        return $this->hasMany(ToDo::class);
+    }
+
+    /**
      * The "booting" method of the model.
      *
      * @return void

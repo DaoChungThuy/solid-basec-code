@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\WorkStatus;
 use Illuminate\Console\Command;
 use App\Models\ToDo;
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ class SendTaskExpirationNotification extends Command
 
         foreach ($tasks as $task) {
             $userEmail = $task->user->email;
-            $task->status = 3;
+            $task->status = WorkStatus::Late;
             $task->save();
 
             Mail::to($userEmail)

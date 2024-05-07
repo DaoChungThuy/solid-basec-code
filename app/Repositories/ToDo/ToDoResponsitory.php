@@ -20,8 +20,7 @@ class ToDoResponsitory extends BaseRepository implements ToDoRepositoryInterface
 
     public function getByQuery($search = null, $where = [], $orderBy = [])
     {
-        $result = $this->model;
-        $dataSet = $result->where(function ($query) use ($search) {
+        $dataSet = $this->model->where(function ($query) use ($search) {
             if (!empty ($search)) {
                 $query->where('title', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%');

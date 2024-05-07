@@ -18,6 +18,12 @@ use App\Http\Requests\ToDo\UpdateToDoRequest;
 
 class ToDoController extends Controller
 {
+    /**
+     * Get a list of ToDo based on the requested parameters.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $toDo = resolve(FindByRequestService::class)->setParams($request->all())->handle();
@@ -33,9 +39,16 @@ class ToDoController extends Controller
 
     }
 
+    /**
+     * Get a list of ToDo categories.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getCategory(Request $request)
     {
         $category = resolve(GetCategoryService::class)->handle();
+
         if (!$category) {
             return $this->responseErrors(__('message.errors'));
         }
@@ -46,6 +59,12 @@ class ToDoController extends Controller
         ]);
     }
 
+    /**
+     * Store a new ToDo.
+     *
+     * @param  \App\Http\Requests\ToDo\CreateToDoRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(CreateToDoRequest $request)
     {
         $toDo = resolve(CreateToDoService::class)->setParams($request->all())->handle();
@@ -60,6 +79,12 @@ class ToDoController extends Controller
         ]);
     }
 
+    /**
+     * Get ToDo by ID.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function find($id)
     {
         $toDo = resolve(FindToDoService::class)->setParams($id)->handle();
@@ -74,6 +99,12 @@ class ToDoController extends Controller
         ]);
     }
 
+    /**
+     * Get ToDo by user is logged in.
+     *
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function findByUser()
     {
         $toDo = resolve(FindByUserService::class)->handle();
@@ -88,11 +119,12 @@ class ToDoController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
-
-    }
-
+    /**
+     * Update ToDo.
+     *
+     * @param  \App\Http\Requests\ToDo\CreateToDoRequest  $request 
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(UpdateToDoRequest $request, $id)
     {
         $data = array_merge($request->validated(), ['id' => $id]);
@@ -109,9 +141,16 @@ class ToDoController extends Controller
         ]);
     }
 
+    /**
+     * delete ToDo by ID.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $toDo = resolve(DeleteToDoService::class)->setParams($id)->handle();
+
         if (!$toDo) {
             return $this->responseErrors(__('message.errors'));
         }

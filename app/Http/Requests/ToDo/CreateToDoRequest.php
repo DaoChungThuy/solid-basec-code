@@ -6,8 +6,6 @@ use App\Http\Requests\BaseRequest;
 
 class CreateToDoRequest extends BaseRequest
 {
-
-
     /**
      * Get the validation rules that apply to the request.
      *
